@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash 
 echo "Welcome To Tic Tac Toe Game"
 
 declare -a arrayBoard
@@ -27,4 +27,13 @@ function assignedLetter(){
 	fi
 	echo "Player Assigned Letter is $player"
 }
+function whoPlayFirst(){
+	if(( $((RANDOM%2))==0 ))
+	then
+		echo "$player play first"
+	else
+		echo "$player play first"
+	fi
+}
 assignedLetter
+whoPlayFirst
