@@ -8,7 +8,7 @@ player=0
 
 arrayBoard=( 1 2 3 4 5 6 7 8 9 )
 
-displayBoard(){
+function displayBoard(){
 echo "|===|===|===|"
 echo "| ${arrayBoard[0]} | ${arrayBoard[1]} | ${arrayBoard[2]} |"
 echo "|===|===|===|"
@@ -19,7 +19,7 @@ echo "|===|===|===|"
 }
 
 function assignedLetter(){
-	if(( $((RANDOM%2))==0 ))
+	if [ $((RANDOM%2)) -eq 0 ]
 	then
 		player=X
 	else
@@ -28,7 +28,7 @@ function assignedLetter(){
 	echo "Player Assigned Letter is $player"
 }
 function whoPlayFirst(){
-	if(( $((RANDOM%2))==0 ))
+	if [ $((RANDOM%2)) -eq 0 ]
 	then
 		echo "$player play first"
 	else
@@ -37,3 +37,4 @@ function whoPlayFirst(){
 }
 assignedLetter
 whoPlayFirst
+displayBoard
