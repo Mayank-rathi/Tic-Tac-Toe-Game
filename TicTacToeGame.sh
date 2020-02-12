@@ -91,10 +91,7 @@ function changeTurn(){
 		computerBlockUserFromWinning
 		if [[ $block == true ]]
 		then	
-			player_Position=$((RANDOM%9+1))
-		valueRangeOneToNine
-		arrayBoard[$player_Position]=$computer
-		displayBoard
+			checkCorner
 		fi
 		flag=true
 	fi
@@ -140,6 +137,22 @@ do
 	fi
 done
 }
+#Check corner value first
+function checkCorner(){
+   for((i=1;i<=9;i+=2))
+   do
+      if(($i != 5))
+      then
+			if [[ ${arrayBoard[$i]} == "-" ]]
+			then
+			arrayBoard[$i]=$computer
+			displayBoard
+         break
+			fi
+      fi
+   done
+}
+
 
 #Checking user input and tie condition
 function userInputValue() {
@@ -152,7 +165,6 @@ function userInputValue() {
 		fi
 			changeTurn
 			((count++))
-
 	done
 }
 toss
