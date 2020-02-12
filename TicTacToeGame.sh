@@ -10,6 +10,7 @@ count=0
 player_Position=0
 arrayBoard=( - - - - - - - - - - )
 winner=false
+block=true
 #Display the empty board
 function displayBoard(){
 echo "|===|===|===|"
@@ -67,6 +68,7 @@ function valueRangeOneToNine(){
 		changeTurn
 	fi
 }
+#Condition for player and computer
 function changeTurn(){
 	if [[ $flag == true ]]
 	then
@@ -84,12 +86,16 @@ function changeTurn(){
 		displayBoard
 		flag=false
 	else
-		computerCheckWinningPosition
 		echo "Computer playing "
-		player_Position=$((RANDOM%9+1))
+		computerCheckWinningPosition
+		computerBlockUserFromWinning
+		if [[ $block == true ]]
+		then	
+			player_Position=$((RANDOM%9+1))
 		valueRangeOneToNine
 		arrayBoard[$player_Position]=$computer
 		displayBoard
+		fi
 		flag=true
 	fi
 }
@@ -113,6 +119,27 @@ do
 	fi
 done
 }
+#Blocking condition for user 
+function computerBlockUserFromWinning(){
+
+	for((k=1;k<=9;k++))
+do
+	if [[ ${arrayBoard[$k]} == "-" ]]
+	then
+		arrayBoard[$k]=$player
+		winningConditionCheck  $player
+		if [[ $winner == true ]]
+		then
+			arrayBoard[$k]=$computer
+			displayBoard
+			winner=false
+			block=false		
+		else
+			arrayBoard[$k]="-"
+		fi
+	fi
+done
+}
 
 #Checking user input and tie condition
 function userInputValue() {
@@ -123,12 +150,9 @@ function userInputValue() {
      		echo "Game is tie"
      		exit
 		fi
-		changeTurn
-
-	#		 valueRangeOneToNine
+			changeTurn
 			((count++))
 
-			winningConditionCheck
 	done
 }
 toss
