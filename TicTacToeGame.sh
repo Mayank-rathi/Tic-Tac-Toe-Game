@@ -92,6 +92,7 @@ function changeTurn(){
 		if [[ $block == true ]]
 		then	
 			checkCorner
+			checkCenter
 		fi
 		flag=true
 	fi
@@ -152,7 +153,14 @@ function checkCorner(){
       fi
    done
 }
-
+function checkCenter(){
+			if [[ ${arrayBoard[$i]} == "-" ]]
+			then
+				arrayBoard[$i]=$computer
+				displayBoard
+         break
+			fi
+}
 
 #Checking user input and tie condition
 function userInputValue() {
