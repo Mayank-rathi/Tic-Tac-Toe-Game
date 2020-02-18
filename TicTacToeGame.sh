@@ -35,27 +35,27 @@ fi
 }
 #Check winning condition in row,column,daigonal
 function winningConditionCheck() {
-	for(( i=1;i<=9;i+=3))
-	do
-		if [[ ${arrayBoard[$i]} == ${arrayBoard[$(($i+1))]} && ${arrayBoard[$(($i+1))]} == ${arrayBoard[$(($i+2))]} && ${arrayBoard[$i]} == $1 ]]
-		then
-			winner=true
-		fi
-	done
-	for(( j=1;j<=9;j++))
-	do
-		if [[ ${arrayBoard[$j]} == ${arrayBoard[$((j+3))]} && ${arrayBoard[$((j+3))]} == ${arrayBoard[$((j+6))]} && ${arrayBoard[$j]} == $1 ]]
-		then
-			winner=true
-		fi
-	done
-		if [[ ${arrayBoard[1]} == ${arrayBoard[5]} && ${arrayBoard[5]} == ${arrayBoard[9]} && ${arrayBoard[1]} == $1 ]]
-		then
-			winner=true
-		elif [[ ${arrayBoard[3]} == ${arrayBoard[5]} && ${arrayBoard[7]} == ${arrayBoard[5]} && ${arrayBoard[3]} == $1 ]]
-		then
-			winner=true
-		fi
+for(( i=1;i<=9;i+=3))
+do
+	if [[ ${arrayBoard[$i]} == ${arrayBoard[$(($i+1))]} && ${arrayBoard[$(($i+1))]} == ${arrayBoard[$(($i+2))]} && ${arrayBoard[$i]} == $1 ]]
+	then
+		winner=true
+	fi
+done
+for(( j=1;j<=9;j++))
+do
+	if [[ ${arrayBoard[$j]} == ${arrayBoard[$((j+3))]} && ${arrayBoard[$((j+3))]} == ${arrayBoard[$((j+6))]} && ${arrayBoard[$j]} == $1 ]]
+	then
+		winner=true
+	fi
+done
+	if [[ ${arrayBoard[1]} == ${arrayBoard[5]} && ${arrayBoard[5]} == ${arrayBoard[9]} && ${arrayBoard[1]} == $1 ]]
+	then
+		winner=true
+	elif [[ ${arrayBoard[3]} == ${arrayBoard[5]} && ${arrayBoard[7]} == ${arrayBoard[5]} && ${arrayBoard[3]} == $1 ]]
+	then
+		winner=true
+	fi
 }
 
 #Check value in one to nine range and board is fill or empty.
@@ -82,18 +82,18 @@ function valueRangeOneToNine(){
 #5)Place value at i)corner ii)center iii)sides
 function changeTurn(){
 if [[ $flag == true ]]
+then
+	echo "player is playing "
+	read -p "Enter value in range 1-9 " player_Position
+	valueRangeOneToNine $player_Position
+	arrayBoard[$player_Position]=$player
+	winningConditionCheck  $player
+	if [[ $winner == true ]]
 	then
-		echo "player is playing "
-		read -p "Enter value in range 1-9 " player_Position
-		valueRangeOneToNine $player_Position
-		arrayBoard[$player_Position]=$player
-		winningConditionCheck  $player
-		if [[ $winner == true ]]
-		then
-			displayBoard
-			echo "player is winner" $player
-			exit
-		fi
+		displayBoard
+		echo "player is winner" $player
+		exit
+	fi
 		displayBoard
 		flag=false
 	else
@@ -186,7 +186,7 @@ function checkSide(){
          	arrayBoard[$i]=$computer
          	displayBoard
 				  block=1
-				  return 1        
+				  return 1
  				  break
          fi
    done
